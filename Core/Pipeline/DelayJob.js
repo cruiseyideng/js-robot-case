@@ -17,7 +17,7 @@ class DelayJob extends Job{
             super.complete();
             return;
         }
-        setTimeout(this.onTimeout, this.timeout * 1000);
+        setTimeout(this.onTimeout.bind(this), this.timeout * 1000);
         super.run();
     }
 

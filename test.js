@@ -11,8 +11,8 @@ class Client{
 
         // 数据配置
         let machine_serial = DataUtil.now().toString();
-        // machine_serial = "1576554549811"
-        let channel_id = "9900101910050001";
+        machine_serial = "1576554549811"
+        let channel_id = "9900011911240001";
         let url = "/lobby_api/api/lobby/quick/toQuickLogin?"
         let params = "channel_id=" + channel_id + "&deviceType=0&machine_serial=" + machine_serial + "&promotion_code=10000&site_id=0"
         let signKey = "WZGARg69AME_LOGRg69AIN_Pvc1tDn9h2g69Ap"
@@ -22,7 +22,7 @@ class Client{
             {
                 type: JobType.HttpRequestJob,
                 responseJson: true,
-                host: "47.56.167.186",
+                host: "192.168.12.15",
                 port: "8889",
                 path: quickLoginUrl
             }
@@ -30,7 +30,7 @@ class Client{
         this.pipeline.insertItemWithData(1, [
             {
                 type: JobType.ConnectServerJob,
-                host: "47.56.167.186",
+                host: "192.168.12.15",
                 port: "65300",
                 namespace: "Login"
             }
@@ -78,7 +78,7 @@ class Client{
         this.pipeline.insertItemWithData(5, [
             {
                 type: JobType.ConnectServerJob,
-                host: "47.56.167.186",
+                host: "192.168.12.15",
                 port: "65400",
                 namespace: "Lobby"
             }
@@ -114,12 +114,20 @@ class Client{
                 messageType: 0xea,
                 message: data,
                 namespace: "Lobby"
+            },
+            undefined,
+            {
+                source: [{
+                    index: 3,
+                    type: 1,
+                    filter: this.filterSend0xe3
+                }]
             }
         ]);
 
         data = {
             // iUserID: 5459956,
-            szNickName: "",
+            szNickName: "你好",
             // szToken: "6B28AAC8E6245B04D4ECA56ECED7CF69"
         }
 
@@ -135,7 +143,7 @@ class Client{
                 source: [{
                     index: 3,
                     type: 1,
-                    filter: this.filterSend0xa1
+                    filter: this.filterSend0xe3
                 }]
             }
         ]);
@@ -147,7 +155,6 @@ class Client{
                 namespace: "Lobby"
             }
         ]);
-
         this.pipeline.run();
     }
 
@@ -169,6 +176,15 @@ class Client{
     }
 
     filterSend0xa1(data){
+        return {
+            message: {
+                iUserID: data["iUserId"],
+                szToken: data["szPasswdToken"]
+            }
+        }
+    }
+    
+    filterSend0xe3(data){
         return {
             message: {
                 iUserId: data["iUserId"],
