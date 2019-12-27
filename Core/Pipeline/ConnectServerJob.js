@@ -18,6 +18,13 @@ class ConnectServerJob extends Job{
         this.namespace = data["namespace"];
     }
 
+    updateWithData(data){
+        super.updateWithData(data);
+        this.host = this.data["host"];
+        this.port = this.data["port"];
+        this.namespace = this.data["namespace"];
+    }
+
     addListeners(){
         Global.eventMgr.addListener(EventNetwork.NetWorkConnectSuccess, this.onConnect, this);
         // Global.eventMgr.addListener(EventNetwork.NetWorkConnectClose, this.onClose, this);
