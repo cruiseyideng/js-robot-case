@@ -18,7 +18,6 @@ class ConnectServerJob extends Job{
         this.namespace = data["namespace"];
     }
 
-    
     updateWithData(data){
         super.updateWithData(data);
         this.host = this.data["host"];

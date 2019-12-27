@@ -5,6 +5,12 @@ const DataUtil = require("./Core/Util/DateUtil");
 const Md5Util = require("./Core/Util/Md5Util")
 const EnumPNames = require("./Core/Protocol/EnumProtocolNames")
 const Serverjson = require("./Config/internalserver.json")
+
+const PipelineName = {
+    QuickLogin:"QuickLogin",
+    ReceiveLoginData:"ReceiveLoginData"
+}
+
 class Client{
 
     constructor(){
@@ -21,7 +27,7 @@ class Client{
         // let server = JSON.parse(Serverjson)
         console.log(Serverjson.loginServer.domain);
 
-        this.pipeline.insertItemWithData(0, [
+        this.pipeline.append(PipelineName.QuickLogin, [
             {
                 type: JobType.HttpRequestJob,
                 responseJson: true,
@@ -71,7 +77,7 @@ class Client{
                 messageType: 0x9000,
                 namespace: EnumPNames.Login
             }
-        ]);
+        ], PipelineName.ReceiveLoginData);
 
         this.pipeline.insertItemWithData(4, [
             {
@@ -107,7 +113,8 @@ class Client{
             undefined,
             {
                 source: [{
-                    index: 3,
+                    // index: 3,
+                    name: PipelineName.ReceiveLoginData,
                     type: 1,
                     filter: this.filterSend0xa1
                 }]

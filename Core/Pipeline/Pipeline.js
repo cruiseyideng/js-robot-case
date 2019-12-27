@@ -50,13 +50,17 @@ class DataFilter{
         let sourceDatas = []
         for (const value of this.source) {
             var index = value["index"];
+            var name = value["name"];
             var dataType = value["type"];
             var filterMap = value["map"];
             var filterFunc = value["filter"];
             var item = pipeline.items[index];
             if(!item){
-                sourceDatas.push(undefined);
-                continue;
+                item = pipeline.itemDict[name];
+                if(!item){
+                    sourceDatas.push(undefined);
+                    continue;
+                }
             }
             var tempData;
             if(dataType == JobInnerDataType.DATA){
@@ -124,6 +128,7 @@ class Pipeline {
     constructor(){
         this.items = [];
         this.index = -1;
+        this.itemDict = {};
     }
 
     init(){
@@ -136,6 +141,23 @@ class Pipeline {
         item.job.on(JobEvent.FINISHED, ()=>{
             this.nextItem();
         })
+        return item;
+    }
+
+    append(name, data){
+        let item = new PipelineItem(data[0], data[1], data[2]);
+        this.itemDict[name] = item;
+        this.items.push(item);
+        item.job.on(JobEvent.FINISHED, ()=>{
+            this.nextItem();
+        })
+    }
+
+    insert(index, data, name=undefined){
+        let item = this.insertItemWithData(index, data);
+        if(name){
+            this.itemDict[name] = item;
+        }
     }
 
     initItemsWithData(listData){
