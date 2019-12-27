@@ -1,0 +1,230 @@
+{
+    "webServer": {
+        "domain": "192.168.12.15",
+        "port": 8889,
+        "yxdTag": "test-hs"
+    },
+    "loginServer": {
+        "domain": "192.168.12.15",
+        "port": 65300,
+        "yxdTag": "test-hs"
+    },
+    "lobbyServer": {
+        "domain": "192.168.12.15",
+        "port": 65400,
+        "yxdTag": "test-hs"
+    },
+    "dispatchServer": {
+        "domain": "192.168.12.15",
+        "port": 65500,
+        "yxdTag": "test-hs"
+    },
+    "fishCenterServer": {
+        "domain": "192.168.12.15",
+        "port": 31000,
+        "yxdTag": "test-hs"
+    },
+    "fishCenterServer1": {
+        "domain": "192.168.12.15",
+        "port": 31000,
+        "yxdTag": "test-hs"
+    },
+    "fishCenterServer2": {
+        "domain": "192.168.12.15",
+        "port": 31002,
+        "yxdTag": "test-hs"
+    },
+    "fishCenterServer3": {
+        "domain": "192.168.12.15",
+        "port": 31004,
+        "yxdTag": "test-hs"
+    },
+    "fishCenterServer4": {
+        "domain": "192.168.12.15",
+        "port": 31006,
+        "yxdTag": "test-hs"
+    },
+    "customServiceServer": {
+        "domain": "192.168.12.15",
+        "port": 7777
+    },
+    "hotUpdateServer": {
+        "domain": "192.168.12.15",
+        "port": 51000
+    },
+    "files": {
+        "webServer": {
+            "url_getVerify": {
+                "filePath": "/lobby_api/api/lobby/mobile/toMobileMessage",
+                "paramFormat": "channel_id={0}&machine_serial={1}&mobile={2}&user_id={3}",
+                "md5Key": "WZGARg69AME_LOGRg69AIN_Pvc1tDn9h2g69Ap"
+            },
+            "url_getVerifyResetPwd": {
+                "filePath": "/lobby_api/api/lobby/mobile/toPwdBack",
+                "paramFormat": "channel_id={0}&machine_serial={1}&mobile={2}&user_id={3}",
+                "md5Key": "WZGARg69AME_LOGRg69AIN_Pvc1tDn9h2g69Ap"
+            },
+            "url_mobilePwdReset": {
+                "filePath": "/lobby_api/api/lobby/mobile/toMobilePwdReset",
+                "paramFormat": "channel_id={0}&machine_serial={1}&mobile={2}&pwd={3}&vertify_code={4}",
+                "md5Key": "WZGARg69AME_LOGRg69AIN_Pvc1tDn9h2g69Ap"
+            },
+            "url_phoneBinding": {
+                "filePath": "/lobby_api/api/lobby/mobile/toMobileBinding",
+                "paramFormat": "channel_id={0}&machine_serial={1}&mobile={2}&pwd={3}&user_id={4}&vertify_code={5}",
+                "md5Key": "WZGARg69AME_LOGRg69AIN_Pvc1tDn9h2g69Ap"
+            },
+            "url_quickRegister": {
+                "filePath": "/lobby_api/api/lobby/quick/toQuickLogin",
+                "paramFormat": "channel_id={0}&deviceType={1}&machine_serial={2}&promotion_code={3}&site_id={4}",
+                "md5Key": "WZGARg69AME_LOGRg69AIN_Pvc1tDn9h2g69Ap"
+            },
+            "url_rechargeType": {
+                "filePath": "/apple_api/alipay/selectNewPayType",
+                "paramFormat": "channel_id={0}&machine_serial={1}&user_id={2}&vipPayAmt={3}",
+                "md5Key": "WZGA2323111e27aCb12313F4"
+            },
+            "url_newRechareOrder": {
+                "filePath": "/apple_api/alipay/toNewCreateOrder",
+                "paramFormat": "channel_id={0}&device_type={1}&machine_serial={2}&order_amount={3}&pay_type={4}&static_flag={5}&user_id={6}&vip_grade={7}",
+                "md5Key": "WZGA2323111e27aCb12313F4"
+            },
+            "url_myGeneralize": {
+                "filePath": "/lobby_api/api/promotion/toGetMyPrInfo",
+                "paramFormat": "channel_id={0}&machine_serial={1}&user_id={2}",
+                "md5Key": "WZGAx9QeANME_SxaORE_vDxaNx9QeA5Ts6"
+            },
+            "url_myMember": {
+                "filePath": "/lobby_api/api/promotion/toGetMyPrUserList",
+                "paramFormat": "channel_id={0}&machine_serial={1}&user_id={2}",
+                "md5Key": "WZGAx9QeANME_SxaORE_vDxaNx9QeA5Ts6"
+            },
+            "url_queryMyMember": {
+                "filePath": "/lobby_api/api/promotion/toGetMyPrUserListByID",
+                "paramFormat": "channel_id={0}&machine_serial={1}&self_user_id={2}&user_id={3}",
+                "md5Key": "WZGAx9QeANME_SxaORE_vDxaNx9QeA5Ts6"
+            },
+            "url_myPerformance": {
+                "filePath": "/lobby_api/api/promotion/toGetMyPrTaxList",
+                "paramFormat": "channel_id={0}&machine_serial={1}&user_id={2}",
+                "md5Key": "WZGAx9QeANME_SxaORE_vDxaNx9QeA5Ts6"
+            },
+            "url_myAward": {
+                "filePath": "/lobby_api/api/promotion/toGetMyPrAllWeekTaxList",
+                "paramFormat": "channel_id={0}&machine_serial={1}&user_id={2}",
+                "md5Key": "WZGAx9QeANME_SxaORE_vDxaNx9QeA5Ts6"
+            },
+            "url_deposit": {
+                "filePath": "/lobby_api/api/promotion/toGetMyPrIncomeList",
+                "paramFormat": "channel_id={0}&machine_serial={1}&user_id={2}",
+                "md5Key": "WZGAx9QeANME_SxaORE_vDxaNx9QeA5Ts6"
+            },
+            "url_bonus": {
+                "filePath": "/lobby_api/api/promotion/toGetIncomeConfigInfo",
+                "paramFormat": "channel_id={0}&machine_serial={1}&user_id={2}",
+                "md5Key": "WZGAx9QeANME_SxaORE_vDxaNx9QeA5Ts6"
+            },
+            "url_setCommission": {
+                "filePath": "/lobby_api/api/promotion/toSetMyPrUserLimtMoneyByID",
+                "paramFormat": "channel_id={0}&limit_money={1}&machine_serial={2}&self_user_id={3}&user_id={4}",
+                "md5Key": "WZGAx9QeANME_SxaORE_vDxaNx9QeA5Ts6"
+            },
+            "url_historyPerformance": {
+                "filePath": "/lobby_api/api/promotion/toGetMyPrAllWeekTaxList",
+                "paramFormat": "channel_id={0}&machine_serial={1}&user_id={2}",
+                "md5Key": "WZGAx9QeANME_SxaORE_vDxaNx9QeA5Ts6"
+            },
+            "url_requestWithdrawal": {
+                "filePath": "/lobby_api/api/promotion/withDrawMyPrIncome",
+                "paramFormat": "channel_id={0}&machine_serial={1}&user_id={2}",
+                "md5Key": "WZGAx9QeANME_SxaORE_vDxaNx9QeA5Ts6"
+            },
+            "url_getNoticeNew": {
+                "filePath": "/lobby_api/customer/getNoticeNew",
+                "paramFormat": "channel_id={0}&machine_serial={1}&token={2}&user_id={3}",
+                "md5Key": "WZGAx9QeANME_SxaORE_vDxaNx9QeA5Ts6"
+            },
+            "url_submitQee": {
+                "filePath": "/lobby_api/customer/submitQee",
+                "paramFormat": "channel_id={0}&machine_serial={1}&token={2}&user_id={3}",
+                "md5Key": "WZGAx9QeANME_SxaORE_vDxaNx9QeA5Ts6"
+            },
+            "url_imgUpload": {
+                "filePath": "/lobby_api/imgUpload/index.jsp",
+                "paramFormat": "user_id={0}",
+                "md5Key": "WZGAx9QeANME_SxaORE_vDxaNx9QeA5Ts6"
+            },
+            "url_bindAlipay": {
+                "filePath": "/apple_api/aliExchange/bindAlipay",
+                "paramFormat": "alipay_no={0}&channel_id={1}&machine_serial={2}&user_id={3}&vertify_code={4}",
+                "md5Key": "WZGA2323111e27aCb12313F4"
+            },
+            "url_bindBankInfo": {
+                "filePath": "/apple_api/aliExchange/bindBankInfo",
+                "paramFormat": "bank_code={0}&bank_no={1}&channel_id={2}&machine_serial={3}&user_id={4}&vertify_code={5}",
+                "md5Key": "WZGA2323111e27aCb12313F4"
+            },
+            "url_VerificationCode": {
+                "filePath": "/apple_api/aliExchange/getBindVerificationCode",
+                "paramFormat": "channel_id={0}&machine_serial={1}&type={2}&user_id={3}",
+                "md5Key": "WZGA2323111e27aCb12313F4"
+            },
+            "url_getButtonInfo": {
+                "filePath": "/login_api/api/lobby/version/getButtonInfo",
+                "paramFormat": "channel_id={0}&machineCode={1}&user_id={2}",
+                "md5Key": "DSGAMEtDQ9_LAME_LOGIN_OGtDQ9IN_N_tDQ9hkRgu9AD"
+            },
+            "url_toExchangeOrder": {
+                "filePath": "/apple_api/aliExchange/toExchangeOrder",
+                "paramFormat": "channel_id={0}&exchange_coin={1}&machine_serial={2}&type={3}&user_id={4}",
+                "md5Key": "WZGA2323111e27aCb12313F4"
+            },
+            "url_getExchangeOrderList": {
+                "filePath": "/apple_api/aliExchange/getExchangeOrderList",
+                "paramFormat": "channel_id={0}&machine_serial={1}&user_id={2}",
+                "md5Key": "WZGA2323111e27aCb12313F4"
+            },
+            "url_getbindAlipay": {
+                "filePath": "/apple_api/aliExchange/getbindAlipay",
+                "paramFormat": "channel_id={0}&machine_serial={1}&user_id={2}",
+                "md5Key": "WZGA2323111e27aCb12313F4"
+            },
+            "url_chatpaysign": {
+                "filePath": "/apple_api/chatpay/sign",
+                "paramFormat": "app_id={0}&device_id={1}&hp={2}&id={3}&timestamp={4}&user_id={5}&user_name={6}&v={7}&wsp={8}",
+                "md5Key": "WZGA2323111e27aCb12313F4"
+            },
+            "url_getHistory": {
+                "filePath": "/msg/getHistoryMsgList",
+                "paramFormat": "userId={0}&historyTime={1}"
+            },
+            "url_uploadImgs2": {
+                "filePath": "/msg/uploadImgs2"
+            },
+            "url_FirstChargeActivity": {
+                "filePath": "/lobby_api/activities/toGetUserActiveInfo",
+                "paramFormat": "channel_id={0}&machine_serial={1}&user_id={2}",
+                "md5Key": "WZGARg69AME_LOGRg69AIN_Pvc1tDn9h2g69Ap"
+            },
+            "url_getChargeActivity": {
+                "filePath": "/lobby_api/first/ajaxGetChargeListAction",
+                "paramFormat": "channel_id={0}&user_id={1}",
+                "md5Key": "WZGARg69AME_LOGRg69AIN_Pvc1tDn9h2g69Ap"
+            }
+        },
+        "hotUpdateServer": {
+            "package": {
+                "filePath": "hotupdate/{ASSETS_DIR}/"
+            },
+            "version": {
+                "filePath": "hotupdate/{ASSETS_DIR}/version.manifest"
+            },
+            "project": {
+                "filePath": "hotupdate/{ASSETS_DIR}/project.manifest"
+            }
+        }
+    },
+    "officialServer": {
+        "domain": "www.xxx.com"
+    }
+}
