@@ -8,7 +8,8 @@ const Serverjson = require("./Config/internalserver.json")
 
 const PipelineName = {
     QuickLogin:"QuickLogin",
-    ReceiveLoginData:"ReceiveLoginData"
+    ReceiveLoginData:"ReceiveLoginData",
+    GameServer: "GameServer"
 }
 
 class Client{
@@ -64,7 +65,8 @@ class Client{
             undefined,
             {
                 source: [{
-                    index: 0,
+                    // index: 0,
+                    name: PipelineName.QuickLogin,
                     type: 1,
                     filter: this.loginData2LoginRequest
                 }]
@@ -78,6 +80,9 @@ class Client{
                 namespace: EnumPNames.Login
             }
         ], PipelineName.ReceiveLoginData);
+
+    
+
 
         this.pipeline.insertItemWithData(4, [
             {
@@ -113,7 +118,7 @@ class Client{
             undefined,
             {
                 source: [{
-                    // index: 3,
+                    // name: PipelineName.ReceiveLoginData,
                     name: PipelineName.ReceiveLoginData,
                     type: 1,
                     filter: this.filterSend0xa1
@@ -132,7 +137,7 @@ class Client{
             undefined,
             {
                 source: [{
-                    index: 3,
+                    name: PipelineName.ReceiveLoginData,
                     type: 1,
                     filter: this.filterSend0xe3
                 }]
@@ -156,7 +161,7 @@ class Client{
             undefined,
             {
                 source: [{
-                    index: 3,
+                    name: PipelineName.ReceiveLoginData,
                     type: 1,
                     filter: this.filterSend0xe3
                 }]
@@ -189,7 +194,7 @@ class Client{
             undefined,
             {
                 source:[{
-                    index: 3,
+                    name: PipelineName.ReceiveLoginData,
                     type: 1,
                     filter: this.filterSend0xa1
                 }]
@@ -215,7 +220,7 @@ class Client{
             undefined,
             {
                 source:[{
-                    index: 3,
+                    name: PipelineName.ReceiveLoginData,
                     type: 1,
                     filter: this.filterSend0xa1
                 }]
@@ -246,21 +251,28 @@ class Client{
             undefined,
             {
                 source:[{
-                    index: 3,
+                    name: PipelineName.ReceiveLoginData,
                     type: 1,
                     filter: this.filterSend0xe3
                 }]
             }
         ]);
         
-        this.pipeline.insertItemWithData(14,[
+        // this.pipeline.insertItemWithData(14,[
+        //     {
+        //         type: JobType.ReceiveMessageJob,
+        //         messageType: 0xa5,
+        //         namespace: EnumPNames.Dispatch
+        //     }
+        // ]);
+
+        this.pipeline.append(Pipeline.GameServer,[
             {
                 type: JobType.ReceiveMessageJob,
                 messageType: 0xa5,
                 namespace: EnumPNames.Dispatch
             }
         ]);
-
 
         //连接百家乐服务
         this.pipeline.insertItemWithData(15,[
@@ -273,31 +285,56 @@ class Client{
             undefined,
             {
                 source: [{
-                    index: 14,
+                    // index: 14,
+                    name: Pipeline.GameServer,
                     type: 1,
-                    filter: this.gameserver
+                    filter: this.filtergameserver
                 }]
             }
         ]);
 
+        //进入百家乐
+        data = {
+            // iUserID: 5460874
+            "iRoomID": 104,
+            // szPasswd: "6BF63F3A05677B4E990117AFDC011A3D"
+            "cLoginType": 1,
+            "iClientSiteType": 186
+        }
+        this.pipeline.insertItemWithData(16,[
+            {
+                type: JobType.SendMessageJob,
+                messageType: 0xa0,
+                message: data,
+                namespace: EnumPNames.Baccarat
+            },
+            undefined,
+            {
+                source:[{
+                    name: PipelineName.ReceiveLoginData,
+                    type: 1,
+                    filter: this.filterSend0xa1
+                }]
+            }
+        ]);
 
-        // //退出百家乐
-        // data = {cLeaveType: 5}
-        // this.pipeline.insertItemWithData(15,[
-        //     {
-        //         type: JobType.SendMessageJob,
-        //         messageType: 0xa8,
-        //         namespace: EnumPNames.Baccarat
-        //     },
-        //     undefined,
-        //     {
-        //         source:[{
-        //             index: 3,
-        //             type: 1,
-        //             filter: this.filterSend0xa4
-        //         }]
-        //     }
-        // ]);
+        //退出百家乐
+        data = {cLeaveType: 5}
+        this.pipeline.insertItemWithData(15,[
+            {
+                type: JobType.SendMessageJob,
+                messageType: 0xa8,
+                namespace: EnumPNames.Baccarat
+            },
+            undefined,
+            {
+                source:[{
+                    name: PipelineName.ReceiveLoginData,
+                    type: 1,
+                    filter: this.filterSend0xa4
+                }]
+            }
+        ]);
 
 
         this.pipeline.run();
@@ -338,19 +375,20 @@ class Client{
         }
     }
 
-    filterSend0xa5(data){
-        return {
+    filterUserid(data){
+        return{
             message: {
-                host: data["szServerIP"],
-                port: data["serverID"]
+                user_id: data["iUserId"]
             }
         }
     }
 
-    gameserver(resObj){
+
+    filtergameserver(resObj){
         var data = {};
         data["host"] = resObj["szServerIP"];
         data["port"] = resObj["serverID"];
+        return data;
     }
 
     signUrl(url, key){

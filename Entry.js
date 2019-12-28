@@ -1,5 +1,5 @@
 const Global = require("./Global");
-const Client = require("./Client");
+const Client = require("./test");
 
 Global.init(main)
 
