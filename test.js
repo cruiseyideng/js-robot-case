@@ -81,260 +81,25 @@ class Client{
             }
         ], PipelineName.ReceiveLoginData);
 
-    
-
-
-        this.pipeline.insertItemWithData(4, [
+        //推广接口
+        data = ""
+        this.pipeline.insertItemWithData(4,[
             {
-                type: JobType.ReceiveMessageJob,
-                messageType: 0x9003,
-                namespace: EnumPNames.Login
-            }
-        ]);
-        this.pipeline.insertItemWithData(5, [
-            {
-                type: JobType.ConnectServerJob,
-                host: Serverjson.lobbyServer.domain,
-                port: Serverjson.lobbyServer.port,
-                namespace: EnumPNames.Lobby
-            }
-        ]);
-
-        //登录认证
-        data = {
-            // iUserID: 5459956,
-            iLobbySiteID: 0,
-            szChannelID: channel_id,
-            // szToken: "6B28AAC8E6245B04D4ECA56ECED7CF69"
-        }
-        
-        this.pipeline.insertItemWithData(6, [
-            {
-                type: JobType.SendMessageJob,
-                messageType: 0xa1,
-                message: data,
-                namespace: EnumPNames.Lobby
-            },
-            undefined,
-            {
-                source: [{
-                    // name: PipelineName.ReceiveLoginData,
-                    name: PipelineName.ReceiveLoginData,
-                    type: 1,
-                    filter: this.filterSend0xa1
-                }]
-            }
-        ]);
-
-        //用户余额，保险箱，充值
-        this.pipeline.insertItemWithData(7, [
-            {
-                type: JobType.SendMessageJob,
-                messageType: 0xea,
-                message: data,
-                namespace: EnumPNames.Lobby
-            },
-            undefined,
-            {
-                source: [{
-                    name: PipelineName.ReceiveLoginData,
-                    type: 1,
-                    filter: this.filterSend0xe3
-                }]
-            }
-        ]);
-
-        //修改昵称
-        data = {
-            // iUserID: 5459956,
-            szNickName: machine_serial.substring(5,),
-            // szToken: "6B28AAC8E6245B04D4ECA56ECED7CF69"
-        }
-
-        this.pipeline.insertItemWithData(8,[
-            {
-                type: JobType.SendMessageJob,
-                messageType: 0xe3,
-                message: data,
-                namespace: EnumPNames.Lobby
-            },
-            undefined,
-            {
-                source: [{
-                    name: PipelineName.ReceiveLoginData,
-                    type: 1,
-                    filter: this.filterSend0xe3
-                }]
-            }
-        ]);
-    
-        this.pipeline.insertItemWithData(9, [
-            {
-                type: JobType.ReceiveMessageJob,
-                messageType: 0xe3,
-                namespace: EnumPNames.Lobby
-            }
-        ]);
-        //存入保险箱
-        data = {
-            iSiteID: 0,
-            iGameID: 0,
-            iServerID: 0,
-            llSaveCoinNum: 300,
-            llGameWinCoinNum: 0,
-        }
-        
-        this.pipeline.insertItemWithData(10,[
-            {
-                type: JobType.SendMessageJob,
-                messageType: 0xd7,
-                message: data,
-                namespace: EnumPNames.Lobby
+                type: JobType.HttpRequestJob,
+                responseJson: true,
+                host: Serverjson.webServer.domain,
+                port: Serverjson.webServer.port,
+                path: data
             },
             undefined,
             {
                 source:[{
                     name: PipelineName.ReceiveLoginData,
                     type: 1,
-                    filter: this.filterSend0xa1
+                    filter: this.filterUserid
                 }]
             }
-        ]);
-
-        //保险箱取出
-        data = {
-            iSiteID: 0,
-            iGameID: 0,
-            iServerID: 0,
-            llGetNum: 300,
-            szBankerPwd: "21218cca77804d2ba1922c33e0151105"
-        }
-
-        this.pipeline.insertItemWithData(11,[
-            {
-                type: JobType.SendMessageJob,
-                messageType: 0xd5,
-                message: data,
-                namespace: EnumPNames.Lobby
-            },
-            undefined,
-            {
-                source:[{
-                    name: PipelineName.ReceiveLoginData,
-                    type: 1,
-                    filter: this.filterSend0xa1
-                }]
-            }
-        ]);
-
-        this.pipeline.insertItemWithData(12, [
-            {
-                type: JobType.ConnectServerJob,
-                host: Serverjson.dispatchServer.domain,
-                port: Serverjson.dispatchServer.port,
-                namespace: EnumPNames.Dispatch
-            }
-        ]);
-
-        data = {
-            gameID: 186,
-            level: 1
-        }
-
-        this.pipeline.insertItemWithData(13,[
-            {
-                type: JobType.SendMessageJob,
-                messageType: 0xa4,
-                message: data,
-                namespace: EnumPNames.Dispatch
-            },
-            undefined,
-            {
-                source:[{
-                    name: PipelineName.ReceiveLoginData,
-                    type: 1,
-                    filter: this.filterSend0xe3
-                }]
-            }
-        ]);
-        
-        // this.pipeline.insertItemWithData(14,[
-        //     {
-        //         type: JobType.ReceiveMessageJob,
-        //         messageType: 0xa5,
-        //         namespace: EnumPNames.Dispatch
-        //     }
-        // ]);
-
-        this.pipeline.append(Pipeline.GameServer,[
-            {
-                type: JobType.ReceiveMessageJob,
-                messageType: 0xa5,
-                namespace: EnumPNames.Dispatch
-            }
-        ]);
-
-        //连接百家乐服务
-        this.pipeline.insertItemWithData(15,[
-            {
-                type: JobType.ConnectServerJob,
-                // host:"192.168.12.15",
-                // port: "18601",
-                namespace: EnumPNames.Baccarat
-            },
-            undefined,
-            {
-                source: [{
-                    // index: 14,
-                    name: Pipeline.GameServer,
-                    type: 1,
-                    filter: this.filtergameserver
-                }]
-            }
-        ]);
-
-        //进入百家乐
-        data = {
-            // iUserID: 5460874
-            "iRoomID": 104,
-            // szPasswd: "6BF63F3A05677B4E990117AFDC011A3D"
-            "cLoginType": 1,
-            "iClientSiteType": 186
-        }
-        this.pipeline.insertItemWithData(16,[
-            {
-                type: JobType.SendMessageJob,
-                messageType: 0xa0,
-                message: data,
-                namespace: EnumPNames.Baccarat
-            },
-            undefined,
-            {
-                source:[{
-                    name: PipelineName.ReceiveLoginData,
-                    type: 1,
-                    filter: this.filterSend0xa1
-                }]
-            }
-        ]);
-
-        //退出百家乐
-        data = {cLeaveType: 5}
-        this.pipeline.insertItemWithData(15,[
-            {
-                type: JobType.SendMessageJob,
-                messageType: 0xa8,
-                namespace: EnumPNames.Baccarat
-            },
-            undefined,
-            {
-                source:[{
-                    name: PipelineName.ReceiveLoginData,
-                    type: 1,
-                    filter: this.filterSend0xa4
-                }]
-            }
-        ]);
+        ])
 
 
         this.pipeline.run();
@@ -376,11 +141,12 @@ class Client{
     }
 
     filterUserid(data){
-        return{
-            message: {
-                user_id: data["iUserId"]
-            }
-        }
+        let user_id = data["iUserId"]
+        let gmpurl = "/lobby_api/api/promotion/toGetMyPrInfo?"
+        let gmpparams = "channel_id=" + channel_id + "&machine_serial=" + machine_serial + "&user_id=" + user_id
+        let toGetMyPrInfourl = gmpurl + this.signUrl(gmpparams,this.signUrl)
+        console.log("toGetMyPrInfourl————————————————"+toGetMyPrInfourl)
+        return toGetMyPrInfourl
     }
 
 
