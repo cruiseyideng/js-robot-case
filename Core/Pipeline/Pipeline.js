@@ -122,6 +122,12 @@ class PipelineItem{
         this.job.updateWithData(data);
         this.job.run();
     }
+
+    onDestroy(){
+        if(this.job){
+            this.job.onDestroy();
+        }
+    }
 }
 
 class Pipeline {
@@ -139,6 +145,7 @@ class Pipeline {
         let item = new PipelineItem(data[0], data[1], data[2]);
         this.items[index] = item;
         item.job.on(JobEvent.FINISHED, ()=>{
+            item.onDestroy();
             this.nextItem();
         })
         return item;
@@ -149,6 +156,7 @@ class Pipeline {
         this.itemDict[name] = item;
         this.items.push(item);
         item.job.on(JobEvent.FINISHED, ()=>{
+            item.onDestroy();
             this.nextItem();
         })
     }
