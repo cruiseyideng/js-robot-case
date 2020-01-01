@@ -1,55 +1,55 @@
 {
     "webServer": {
-        "domain": "192.168.12.15",
+        "domain": "192.168.12.6",
         "port": 8889,
         "yxdTag": "test-hs"
     },
     "loginServer": {
-        "domain": "192.168.12.15",
+        "domain": "192.168.12.6",
         "port": 65300,
         "yxdTag": "test-hs"
     },
     "lobbyServer": {
-        "domain": "192.168.12.15",
+        "domain": "192.168.12.6",
         "port": 65400,
         "yxdTag": "test-hs"
     },
     "dispatchServer": {
-        "domain": "192.168.12.15",
+        "domain": "192.168.12.6",
         "port": 65500,
         "yxdTag": "test-hs"
     },
     "fishCenterServer": {
-        "domain": "192.168.12.15",
+        "domain": "192.168.12.6",
         "port": 31000,
         "yxdTag": "test-hs"
     },
     "fishCenterServer1": {
-        "domain": "192.168.12.15",
+        "domain": "192.168.12.6",
         "port": 31000,
         "yxdTag": "test-hs"
     },
     "fishCenterServer2": {
-        "domain": "192.168.12.15",
+        "domain": "192.168.12.6",
         "port": 31002,
         "yxdTag": "test-hs"
     },
     "fishCenterServer3": {
-        "domain": "192.168.12.15",
+        "domain": "192.168.12.6",
         "port": 31004,
         "yxdTag": "test-hs"
     },
     "fishCenterServer4": {
-        "domain": "192.168.12.15",
+        "domain": "192.168.12.6",
         "port": 31006,
         "yxdTag": "test-hs"
     },
     "customServiceServer": {
-        "domain": "192.168.12.15",
+        "domain": "192.168.12.6",
         "port": 7777
     },
     "hotUpdateServer": {
-        "domain": "192.168.12.15",
+        "domain": "192.168.12.6",
         "port": 51000
     },
     "files": {
