@@ -430,63 +430,162 @@ class Client{
             }
         ]);
 
-        // //连接Dispatch
-        // this.pipeline.insertItemWithData(23,[
-        //     {
-        //         type: JobType.ConnectServerJob,
-        //         host: Serverjson.dispatchServer.domain,
-        //         port: Serverjson.dispatchServer.port,
-        //         namespace: EnumPNames.Dispatch
-        //     }
-        // ]);
+        //连接Dispatch
+        this.pipeline.insertItemWithData(23,[
+            {
+                type: JobType.ConnectServerJob,
+                host: Serverjson.dispatchServer.domain,
+                port: Serverjson.dispatchServer.port,
+                namespace: EnumPNames.Dispatch
+            }
+        ]);
 
-        // //获取龙虎ID
-        // data = {
-        //     gameID: 128,
-        //     level: 1
-        // }
-        // this.pipeline.insertItemWithData(24,[
-        //     {
-        //         type: JobType.SendMessageJob,
-        //         messageType: 0xa4,
-        //         message: data,
-        //         namespace: EnumPNames.Dispatch
-        //     },
-        //     undefined,
-        //     {
-        //         source:[{
-        //             name: PipelineName.ReceiveLoginData,
-        //             type: 1,
-        //             filter: this.filterSend0xa1
-        //         }]
-        //     }
-        // ]);
+        //获取龙虎ID
+        data = {
+            gameID: 128,
+            level: 1
+        }
+        this.pipeline.insertItemWithData(24,[
+            {
+                type: JobType.SendMessageJob,
+                messageType: 0xa4,
+                message: data,
+                namespace: EnumPNames.Dispatch
+            },
+            undefined,
+            {
+                source:[{
+                    name: PipelineName.ReceiveLoginData,
+                    type: 1,
+                    filter: this.filterSend0xa1
+                }]
+            }
+        ]);
 
-        // this.pipeline.append(PipelineName.LongHuServer,[
-        //     {
-        //         type: JobType.ReceiveMessageJob,
-        //         messageType: 0xa5,
-        //         namespace: EnumPNames.Dispatch
-        //     }
-        // ]);
+        this.pipeline.append(PipelineName.LongHuServer,[
+            {
+                type: JobType.ReceiveMessageJob,
+                messageType: 0xa5,
+                namespace: EnumPNames.Dispatch
+            }
+        ]);
 
-        // this.pipeline.insertItemWithData(26,[
-        //     {
-        //         type: JobType.ConnectServerJob,
-        //         // host: "47.56.167.186",
-        //         // port: "12801",
-        //         namespace: EnumPNames.LongHu
-        //     },
-        //     undefined,
-        //     {
-        //         source: [{
-        //             // index: 25,
-        //             name: PipelineName.LongHuServer,
-        //             type: 1,
-        //             filter: this.filtergameserver
-        //         }]
-        //     }
-        // ]);
+        this.pipeline.insertItemWithData(26,[
+            {
+                type: JobType.ConnectServerJob,
+                // host: "47.56.167.186",
+                // port: "12801",
+                namespace: EnumPNames.LongHu
+            },
+            undefined,
+            {
+                source: [{
+                    // index: 25,
+                    name: PipelineName.LongHuServer,
+                    type: 1,
+                    filter: this.filtergameserver
+                }]
+            }
+        ]);
+
+
+        data = {
+            iRoomID: 104,
+            cLoginType: 1,
+            iClientSiteType: 128
+        }
+        this.pipeline.insertItemWithData(27,[
+            {
+                type: JobType.SendMessageJob,
+                messageType: 0xa0,
+                message: data,
+                namespace: EnumPNames.LongHu
+            },
+            undefined,
+            {
+                source:[{
+                    name: PipelineName.ReceiveLoginData,
+                    type: 1,
+                    filter: this.filterEnterGame
+                }]
+            }
+        ]);
+
+        data = {
+            "iBindUserID": 0,
+            "iTableNum": 0,
+            "usTableNumExtra": 0,
+            "UserPointLimit":{
+                "iMinPoint": 0,
+                "iMaxPoint": 0
+            }
+
+        }
+        this.pipeline.insertItemWithData(28,[
+            {
+                type: JobType.SendMessageJob,
+                messageType: 0xa4,
+                message: data,
+                namespace: EnumPNames.LongHu
+            }
+        ]);
+
+        data = {"cLeaveType": 5}
+        this.pipeline.insertItemWithData(29,[
+            {
+                type: JobType.SendMessageJob,
+                messageType: 0xa8,
+                message: data,
+                namespace: EnumPNames.LongHu
+            },
+            undefined,
+            {
+                source:[{
+                name: PipelineName.ReceiveLoginData,
+                type: 1,
+                filter: this.filterSend0xa1
+                }]
+            }
+        ]);
+
+        this.pipeline.insertItemWithData(30,[
+            {
+                type: JobType.ReceiveMessageJob,
+                messageType: 0xb5,
+                namespace: EnumPNames.LongHu
+            }
+        ]);
+
+        this.pipeline.insertItemWithData(31,[
+            {
+                type: JobType.ConnectServerJob,
+                host: Serverjson.lobbyServer.domain,
+                port: Serverjson.lobbyServer.port,
+                namespace: EnumPNames.Lobby
+            }
+        ]);
+
+        //退出后重连大厅
+        data = {
+            iLobbySiteID: 0,
+            szChannelID: channel_id,
+        }
+        this.pipeline.insertItemWithData(22,[
+            {
+                type: JobType.SendMessageJob,
+                messageType: 0xa1,
+                message: data,
+                namespace: EnumPNames.Lobby 
+            },
+            undefined,
+            {
+                source:[{
+                    name: PipelineName.ReceiveLoginData,
+                    type: 1,
+                    filter: this.filterSend0xa1
+                }]
+            }
+        ]);
 
         this.pipeline.run();
     }
@@ -538,7 +637,6 @@ class Client{
     }
 
     filterEnterGame(data){
-        // console.log("szPasswdToken___________________"+data["szPasswdToken"])
         return {
             message: {
                 iUserID: data["iUserId"],
